@@ -1,0 +1,64 @@
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f4f4f4;
+    margin: 0;
+    padding: 0;
+}
+.container {
+    width: 80%;
+    margin: auto;
+    overflow: hidden;
+}
+header {
+    background: #333;
+    color: #fff;
+    padding-top: 30px;
+    min-height: 70px;
+    border-bottom: #77aaff 3px solid;
+}
+header a {
+    color: #fff;
+    text-decoration: none;
+    text-transform: uppercase;
+    font-size: 16px;
+}
+header ul {
+    padding: 0;
+    list-style: none;
+}
+header li {
+    display: inline;
+    padding: 0 20px 0 20px;
+}
+.actions {
+    margin: 20px 0;
+}
+.actions button {
+    padding: 10px 15px;
+    margin-right: 5px;
+    border: none;
+    background: #333;
+    color: #fff;
+    cursor: pointer;
+}
+.actions button:hover {
+    background: #77aaff;
+}
+.form-container, .inventory-container {
+    background: #fff;
+    padding: 20px;
+    margin: 20px 0;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
+.inventory-container table {
+    width: 100%;
+    border-collapse: collapse;
+}
+.inventory-container table, th, td {
+    border: 1px solid #ccc;
+}
+.inventory-container th, td {
+    padding: 10px;
+    text-align: left;
+}
