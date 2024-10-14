@@ -6,7 +6,7 @@
     <title>Sistema de Gestão de Estoque</title>
     <link rel="stylesheet" href="styles.css">
     <style type="text/css">
-        body {
+     .body {
   background-image: url('https://img.freepik.com/premium-photo/abstract-creative-background-using-your-project-ui-ux-design_155807-1066.jpg?w=996');
   background-size: cover; 
   display: flex;
@@ -17,7 +17,7 @@
   margin: 0;
   animation: moveBackground 20s infinite alternate; /* Animação aplicada */
 }
-        container {
+    . container {
     max-width: 600px;
     margin: 50px auto;
     padding: 20px;
@@ -29,16 +29,16 @@
     transition: opacity 0.5s ease; /* Adiciona uma transição suave */
 }
 
-container.show {
+.container.show {
     opacity: 0.9; /* Torna o container visível */
 }
 
-h1 {
+.h1 {
     color: #333;
     text-align: center;
 }
 
-form {
+.form {
     display: flex;
     flex-direction: column;
 }
@@ -47,7 +47,7 @@ label {
     margin-top: 10px;
     color: #cc;
 }
-select{
+.select{
     width: 100%;
     padding: 8px;
     margin-top: 5px;
@@ -55,7 +55,7 @@ select{
     border-radius: 5px;
     box-sizing: border-box;
 }
- input{
+ .input{
     width: 100%;
     padding: 8px;
     margin-top: 5px;
@@ -63,7 +63,7 @@ select{
     border-radius: 5px;
     box-sizing: border-box;
 }
-  textarea {
+  .textarea {
     width: 100%;
     padding: 8px;
     margin-top: 5px;
@@ -72,7 +72,7 @@ select{
     box-sizing: border-box;
 }
 
-button {
+.button {
     background-color: #4CAF50;
     color: white;
     padding: 10px 20px;
@@ -82,7 +82,7 @@ button {
     cursor: pointer;
 }
 
-button:hover {
+.button:hover {
     background-color: #45a049;
 }
 
@@ -110,19 +110,7 @@ button:hover {
   }
 }
 
-body {
-  background-image: url('https://img.freepik.com/premium-photo/abstract-creative-background-using-your-project-ui-ux-design_155807-1066.jpg?w=996');
-  background-size: cover; 
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  height: 100vh;
-  margin: 0;
-  animation: moveBackground 20s infinite alternate; /* Animação aplicada */
-}
-
-button {
+.button {
   border: calc(0.08 * var(--m)) solid transparent;
   position: relative;
   color: #F3F3F3;
@@ -141,7 +129,7 @@ button {
   animation: animate 2s infinite linear;
 }
 
-button::before {
+.button::before {
   content: '';
   background: linear-gradient(90deg, var(--orange), var(--yellow), var(--green), var(--blue), var(--purple), var(--pink), var(--red));
   height: 30%;
@@ -154,7 +142,7 @@ button::before {
   filter: blur(calc(0.8 * var(--m)));
 }
 
-button:hover, button:hover::before {
+.button:hover, button:hover::before {
   animation: animate 0.5s infinite linear;
 }
 
