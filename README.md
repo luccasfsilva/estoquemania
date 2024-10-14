@@ -19,8 +19,3 @@
 O sistema está disponível online e pode ser acessado através do seguinte link:
 [EstoqueMania](https://luccasfsilva.github.io/estoquemania/)
 
-## Instalação
-
-1. Clone o repositório:
-   ```bash
-   git clone https://github.com/luccasfsilva/estoquemania.git
