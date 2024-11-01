@@ -7,22 +7,33 @@
      <link rel="stylesheet" href="styles.css">
     <style type="text/css">
      body {
-    font-family: 'Roboto', sans-serif;
-     background: #ffffff;
-     background-image: linear-gradient(
-    180deg,
-    rgba(84, 84, 212, 0.37) 30%,
-    rgba(84, 84, 212, 0.09) 100%
-  );
-    margin: 0;
-    padding: 0;
-    
+  background-image: url('https://checkbits.com.br/wp-content/uploads/2023/04/Organizacao-de-estoque-5-dicas-para-nao-errar.png');
+  background-size: cover;
+  background-attachment: fixed;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  margin: 0;
+  animation: backgroundScroll 200s linear infinite;
 }
+
+@keyframes backgroundScroll {
+  0% {
+    background-position: 0 0;
+  }
+  100% {
+    background-position: 0 100%;
+  }
+}
+
 
 .container {
     width: 80%;
     margin: auto;
     overflow: hidden;
+  
 }
 
 header {
