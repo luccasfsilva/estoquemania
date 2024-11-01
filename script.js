@@ -1,7 +1,41 @@
 let inventory = JSON.parse(localStorage.getItem('inventory')) || [];
+let chart; // Variável para armazenar a instância do gráfico
 
 function saveToLocalStorage() {
     localStorage.setItem('inventory', JSON.stringify(inventory));
+}
+
+// Inicializa o gráfico
+function initializeChart() {
+    const ctx = document.getElementById('inventoryChart').getContext('2d');
+chart = new Chart(ctx, {
+    type: 'doughnut',
+    data: {
+        labels: inventory.map(item => item.nome),
+        datasets: [{
+            label: 'Quantidade em Estoque',
+            data: inventory.map(item => item.quantidade),
+            backgroundColor: inventory.map((_, i) => `hsl(${i * 36}, 100%, 50%)`),
+            borderColor: '#fff',
+            borderWidth: 1
+        }]
+    },
+    options: {
+        responsive: true,
+        plugins: {
+            legend: {
+                position: 'top'
+            }
+        }
+    }
+});
+}
+
+// Atualiza o gráfico com novos dados
+function updateChart() {
+    chart.data.labels = inventory.map(item => item.nome);
+    chart.data.datasets[0].data = inventory.map(item => item.quantidade);
+    chart.update();
 }
 
 function showAddForm() {
@@ -67,21 +101,38 @@ function showRemoveForm() {
 function adicionarItem(codigo, nome, quantidade) {
     inventory.push({ codigo, nome, quantidade });
     saveToLocalStorage();
+    updateChart(); // Atualiza o gráfico
+    alert('Item adicionado com sucesso!');
 }
 
 function atualizarItem(codigo, quantidade) {
+    let itemAtualizado = false;
     for (let i = 0; i < inventory.length; i++) {
         if (inventory[i].codigo === codigo) {
             inventory[i].quantidade = quantidade;
+            itemAtualizado = true;
             break;
         }
     }
-    saveToLocalStorage();
+    if (itemAtualizado) {
+        saveToLocalStorage();
+        updateChart(); // Atualiza o gráfico
+        alert('Item atualizado com sucesso!');
+    } else {
+        alert('Item não encontrado!');
+    }
 }
 
 function removerItem(codigo) {
-    inventory = inventory.filter(item => item.codigo !== codigo);
-    saveToLocalStorage();
+    const novoInventario = inventory.filter(item => item.codigo !== codigo);
+    if (novoInventario.length < inventory.length) {
+        inventory = novoInventario;
+        saveToLocalStorage();
+        updateChart(); // Atualiza o gráfico
+        alert('Item removido com sucesso!');
+    } else {
+        alert('Item não encontrado!');
+    }
 }
 
 function viewInventory() {
@@ -105,6 +156,10 @@ function viewInventory() {
     `;
 }
 
-// Carregar o inventário ao carregar a página
-document.addEventListener('DOMContentLoaded', viewInventory);
+// Inicializar a visualização do estoque e o gráfico ao carregar a página
+document.addEventListener('DOMContentLoaded', function() {
+    viewInventory();
+    initializeChart(); // Inicializa o gráfico
+});
+
 
