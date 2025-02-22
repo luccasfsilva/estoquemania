@@ -1,12 +1,11 @@
-let inventory = JSON.parse(localStorage.getItem("inventory")) || [];
-let chart;
+let inventory = JSON.parse(localStorage.getItem('inventory')) || [];
 
 function saveToLocalStorage() {
-    localStorage.setItem("inventory", JSON.stringify(inventory));
+    localStorage.setItem('inventory', JSON.stringify(inventory));
 }
 
 function showAddForm() {
-    const formContainer = document.getElementById("form-container");
+    const formContainer = document.getElementById('form-container');
     formContainer.innerHTML = `
         <h2>Adicionar Item</h2>
         <form id="addForm">
@@ -20,62 +19,29 @@ function showAddForm() {
         </form>
     `;
 
-    document.getElementById("addForm").addEventListener("submit", function (e) {
+    document.getElementById('addForm').addEventListener('submit', function(e) {
         e.preventDefault();
-        let codigo = document.getElementById("codigo").value;
-        let nome = document.getElementById("nome").value;
-        let quantidade = parseInt(document.getElementById("quantidade").value);
-        let saida = parseInt(document.getElementById("saida").value);
-        let data = document.getElementById("data").value;
-        let setor = document.getElementById("setor").value;
+        let codigo = document.getElementById('codigo').value;
+        let nome = document.getElementById('nome').value;
+        let quantidade = parseInt(document.getElementById('quantidade').value);
+        let saida = parseInt(document.getElementById('saida').value);
+        let data = document.getElementById('data').value;
+        let setor = document.getElementById('setor').value;
         let quantidadeAposSaida = quantidade - saida;
 
         adicionarItem(codigo, nome, quantidade, saida, quantidadeAposSaida, data, setor);
-        formContainer.innerHTML = "";
-        viewInventory();
+        formContainer.innerHTML = '';
     });
 }
 
 function adicionarItem(codigo, nome, quantidade, saida, quantidadeAposSaida, data, setor) {
     inventory.push({ codigo, nome, quantidade, saida, quantidadeAposSaida, data, setor });
     saveToLocalStorage();
+    viewInventory(); // 🔥 Atualiza a tabela automaticamente
 }
 
-// 🛑 NOVA FUNÇÃO PARA REMOVER ITEM 🛑
-function showRemoveForm() {
-    const formContainer = document.getElementById("form-container");
-    formContainer.innerHTML = `
-        <h2>Remover Item</h2>
-        <form id="removeForm">
-            <input type="text" id="codigoRemover" placeholder="Código do Produto" required>
-            <button type="submit">Remover</button>
-        </form>
-    `;
-
-    document.getElementById("removeForm").addEventListener("submit", function (e) {
-        e.preventDefault();
-        let codigo = document.getElementById("codigoRemover").value;
-        removerItem(codigo);
-        formContainer.innerHTML = "";
-        viewInventory();
-    });
-}
-
-function removerItem(codigo) {
-    let index = inventory.findIndex((item) => item.codigo === codigo);
-    
-    if (index !== -1) {
-        inventory.splice(index, 1); // Remove o item do array
-        saveToLocalStorage();
-        alert("Item removido com sucesso!");
-    } else {
-        alert("Item não encontrado!");
-    }
-}
-
-// 🔄 ATUALIZAR ITEM 🔄
 function showUpdateForm() {
-    const formContainer = document.getElementById("form-container");
+    const formContainer = document.getElementById('form-container');
     formContainer.innerHTML = `
         <h2>Atualizar Item</h2>
         <form id="updateForm">
@@ -88,16 +54,15 @@ function showUpdateForm() {
         </form>
     `;
 
-    document.getElementById("updateForm").addEventListener("submit", function (e) {
+    document.getElementById('updateForm').addEventListener('submit', function(e) {
         e.preventDefault();
-        let codigo = document.getElementById("codigo").value;
-        let quantidade = parseInt(document.getElementById("quantidade").value);
-        let saida = parseInt(document.getElementById("saida").value);
-        let data = document.getElementById("data").value;
-        let setor = document.getElementById("setor").value;
+        let codigo = document.getElementById('codigo').value;
+        let quantidade = parseInt(document.getElementById('quantidade').value);
+        let saida = parseInt(document.getElementById('saida').value);
+        let data = document.getElementById('data').value;
+        let setor = document.getElementById('setor').value;
         atualizarItem(codigo, quantidade, saida, data, setor);
-        formContainer.innerHTML = "";
-        viewInventory();
+        formContainer.innerHTML = '';
     });
 }
 
@@ -116,14 +81,44 @@ function atualizarItem(codigo, quantidade, saida, data, setor) {
     }
     if (itemAtualizado) {
         saveToLocalStorage();
+        viewInventory(); // 🔥 Atualiza a tabela automaticamente
     } else {
-        alert("Item não encontrado!");
+        alert('Item não encontrado!');
     }
 }
 
-// 📊 VISUALIZAR ESTOQUE 📊
+function showRemoveForm() {
+    const formContainer = document.getElementById('form-container');
+    formContainer.innerHTML = `
+        <h2>Remover Item</h2>
+        <form id="removeForm">
+            <input type="text" id="codigoRemover" placeholder="Código do Produto" required>
+            <button type="submit">Remover</button>
+        </form>
+    `;
+
+    document.getElementById('removeForm').addEventListener('submit', function(e) {
+        e.preventDefault();
+        let codigo = document.getElementById('codigoRemover').value;
+        removerItem(codigo);
+        formContainer.innerHTML = '';
+    });
+}
+
+function removerItem(codigo) {
+    let novoInventory = inventory.filter(item => item.codigo !== codigo);
+
+    if (novoInventory.length !== inventory.length) {
+        inventory = novoInventory;
+        saveToLocalStorage();
+        viewInventory(); // 🔥 Atualiza a tabela automaticamente
+    } else {
+        alert('Código não encontrado!');
+    }
+}
+
 function viewInventory() {
-    const inventoryContainer = document.getElementById("inventory-container");
+    const inventoryContainer = document.getElementById('inventory-container');
     inventoryContainer.innerHTML = `
         <h2>Itens no Estoque</h2>
         <table>
@@ -134,11 +129,9 @@ function viewInventory() {
                 <th>Saída</th>
                 <th>Quantidade Após Saída</th>
                 <th>Data</th>
-                <th>Setor</th>
+                <th>Setor Destinado</th>
             </tr>
-            ${inventory
-                .map(
-                    (item) => `
+            ${inventory.map(item => `
                 <tr>
                     <td>${item.codigo}</td>
                     <td>${item.nome}</td>
@@ -148,51 +141,12 @@ function viewInventory() {
                     <td>${item.data}</td>
                     <td>${item.setor}</td>
                 </tr>
-            `
-                )
-                .join("")}
+            `).join('')}
         </table>
     `;
-
-    atualizarGrafico();
 }
 
-// 📈 ATUALIZAR GRÁFICO 📈
-function atualizarGrafico() {
-    if (chart) {
-        chart.destroy();
-    }
-
-    let ctx = document.getElementById("chart").getContext("2d");
-    let labels = inventory.map((item) => item.nome);
-    let data = inventory.map((item) => item.quantidadeAposSaida);
-
-    chart = new Chart(ctx, {
-        type: "bar",
-        data: {
-            labels: labels,
-            datasets: [
-                {
-                    label: "Quantidade Após Saída",
-                    data: data,
-                    backgroundColor: "rgba(54, 162, 235, 105)",
-                    borderColor: "rgba(54, 162, 235, 105)",
-                    borderWidth: 1,
-                },
-            ],
-        },
-        options: {
-            responsive: true,
-            scales: {
-                y: {
-                    beginAtZero: true,
-                },
-            },
-        },
-    });
-}
-
-// 🏁 INICIALIZA A VISUALIZAÇÃO AO CARREGAR A PÁGINA 🏁
-document.addEventListener("DOMContentLoaded", function () {
+// Inicializa a visualização ao carregar a página
+document.addEventListener('DOMContentLoaded', function() {
     viewInventory();
 });
